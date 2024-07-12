@@ -50,12 +50,12 @@ class NoticeListView extends StatelessWidget {
                           Get.to(() => const DetailPageView(), arguments: data[reversedIndex]);
                         },
                         child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 3.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 7.0, vertical: 3.0),
                             child: Container(
-                              height: 120,
-                              width: 340,
+                              width: double.infinity,
+                              constraints: const BoxConstraints(minHeight: 100),
                               decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 212, 221, 232),
+                                color: const Color.fromARGB(255, 241, 220, 231),
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
                               child: Padding(
