@@ -10,6 +10,10 @@ class NoticeListView extends StatelessWidget {
 
   NoticeListView({super.key, required this.category});
 
+  Future<void> _refreshData() async {
+    noticeController.refreshData(category);
+  }
+
   @override
   Widget build(BuildContext context) {
     RxList<Notice> data;
@@ -35,58 +39,61 @@ class NoticeListView extends StatelessWidget {
         body: Padding(
           padding: const EdgeInsets.only(top: 10.0),
           child: Obx(() {
-            return ListView.builder(
-                itemCount: data.length,
-                itemBuilder: (context, index) {
-                  final reversedIndex = data.length - 1 - index;
-                  return GestureDetector(
-                      onTap: () {
-                        Get.to(() => const DetailPageView(), arguments: data[reversedIndex]);
-                      },
-                      child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 3.0),
-                          child: Container(
-                            height: 120,
-                            width: 340,
-                            decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 212, 221, 232),
-                              borderRadius: BorderRadius.circular(12.0),
-                            ),
-                            child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 18.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(data[reversedIndex].title,
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                        )),
-                                    const SizedBox(height: 5),
-                                    Row(
-                                      children: [
-                                        Text(data[reversedIndex].created_at,
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 12,
-                                            )),
-                                        IconButton(
-                                          icon: const Icon(
-                                            Icons.delete,
+            return RefreshIndicator(
+              onRefresh: _refreshData,
+              child: ListView.builder(
+                  itemCount: data.length,
+                  itemBuilder: (context, index) {
+                    final reversedIndex = data.length - 1 - index;
+                    return GestureDetector(
+                        onTap: () {
+                          Get.to(() => const DetailPageView(), arguments: data[reversedIndex]);
+                        },
+                        child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 3.0),
+                            child: Container(
+                              height: 120,
+                              width: 340,
+                              decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 212, 221, 232),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              child: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 18.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(data[reversedIndex].title,
+                                          style: const TextStyle(
                                             color: Colors.white,
-                                            size: 12,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          )),
+                                      const SizedBox(height: 5),
+                                      Row(
+                                        children: [
+                                          Text(data[reversedIndex].created_at,
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 12,
+                                              )),
+                                          IconButton(
+                                            icon: const Icon(
+                                              Icons.delete,
+                                              color: Colors.white,
+                                              size: 12,
+                                            ),
+                                            onPressed: () {
+                                              noticeController.deleteNotice(data[reversedIndex]);
+                                            },
                                           ),
-                                          onPressed: () {
-                                            noticeController.deleteNotice(data[reversedIndex]);
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                )),
-                          )));
-                });
+                                        ],
+                                      ),
+                                    ],
+                                  )),
+                            )));
+                  }),
+            );
           }),
         ));
   }
