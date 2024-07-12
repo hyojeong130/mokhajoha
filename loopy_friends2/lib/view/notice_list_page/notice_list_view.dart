@@ -55,7 +55,7 @@ class NoticeListView extends StatelessWidget {
                               width: double.infinity,
                               constraints: const BoxConstraints(minHeight: 100),
                               decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 241, 220, 231),
+                                color: const Color.fromARGB(183, 80, 103, 105),
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
                               child: Padding(
