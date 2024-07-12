@@ -72,4 +72,17 @@ class NoticeController extends GetxController {
     }
     targetList.value = jsonData.map((json) => Notice.fromJson(json)).toList();
   }
+
+  Future<void> deleteNotice(Notice notice) async {
+    String url = '${Urls.apiUrl}notice/${notice.id}';
+    final response = await http.delete(Uri.parse(url));
+    if (response.statusCode == 200) {
+      totalCouncilData.remove(notice);
+      departmentCouncilData.remove(notice);
+      departmentNoticeData.remove(notice);
+      applyRecruitData.remove(notice);
+    } else {
+      Get.snackbar('Error', 'Failed to delete notice from server');
+    }
+  }
 }

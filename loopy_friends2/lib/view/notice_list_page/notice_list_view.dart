@@ -44,9 +44,9 @@ class NoticeListView extends StatelessWidget {
                         Get.to(() => const DetailPageView(), arguments: data[reversedIndex]);
                       },
                       child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 7.0, vertical: 3.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 3.0),
                           child: Container(
-                            height: 100,
+                            height: 120,
                             width: 340,
                             decoration: BoxDecoration(
                               color: const Color.fromARGB(255, 212, 221, 232),
@@ -63,12 +63,26 @@ class NoticeListView extends StatelessWidget {
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
                                         )),
-                                    const SizedBox(height: 10),
-                                    Text(data[reversedIndex].created_at,
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 14,
-                                        ))
+                                    const SizedBox(height: 5),
+                                    Row(
+                                      children: [
+                                        Text(data[reversedIndex].created_at,
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12,
+                                            )),
+                                        IconButton(
+                                          icon: const Icon(
+                                            Icons.delete,
+                                            color: Colors.white,
+                                            size: 12,
+                                          ),
+                                          onPressed: () {
+                                            noticeController.deleteNotice(data[reversedIndex]);
+                                          },
+                                        ),
+                                      ],
+                                    ),
                                   ],
                                 )),
                           )));
