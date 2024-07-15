@@ -4,7 +4,7 @@ import 'package:loopy_friends2/constants/url.dart';
 import 'dart:convert';
 
 class PostController extends GetxController {
-  Future<void> sendPost(String title, String content, String category) async {
+  Future<void> sendPost(String title, String content, String url, String category) async {
     String url = '${Urls.apiUrl}notice/';
 
     final response = await http.post(
@@ -16,6 +16,7 @@ class PostController extends GetxController {
       body: jsonEncode(<String, dynamic>{
         'title': title,
         'content': content,
+        'url': url,
         'category': category,
       }),
     );
