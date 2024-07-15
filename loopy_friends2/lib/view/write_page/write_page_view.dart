@@ -51,7 +51,7 @@ class _WritePageViewState extends State<WritePageView> {
                       _titleController.text,
                       _contentController.text,
                       category,
-                      _isUrlEnabled ? _urlController.text : '',
+                      _isUrlEnabled ? _urlController.text : '없음',
                     );
                     Navigator.of(context).pop();
                   },
