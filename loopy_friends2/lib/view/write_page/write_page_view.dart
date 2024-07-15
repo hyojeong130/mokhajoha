@@ -122,6 +122,9 @@ class _WritePageViewState extends State<WritePageView> {
                       onChanged: (bool? value) {
                         setState(() {
                           _isUrlEnabled = value!;
+                          if (!_isUrlEnabled) {
+                            _urlController.text = '없음';
+                          }
                         });
                       },
                     ),
