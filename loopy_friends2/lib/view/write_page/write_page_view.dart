@@ -13,9 +13,11 @@ class _WritePageViewState extends State<WritePageView> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _contentController = TextEditingController();
   final TextEditingController _urlController = TextEditingController();
+  final TextEditingController _deadlineController = TextEditingController();
   final PostController postController = Get.find<PostController>();
 
   bool _isUrlEnabled = false;
+  bool _isDeadlineEnabled = false;
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +54,7 @@ class _WritePageViewState extends State<WritePageView> {
                       _contentController.text,
                       category,
                       _isUrlEnabled ? _urlController.text : '없음',
+                      _isDeadlineEnabled ? _deadlineController.text : '없음',
                     );
                     Navigator.of(context).pop();
                   },
@@ -136,6 +139,53 @@ class _WritePageViewState extends State<WritePageView> {
                   controller: _urlController,
                   decoration: const InputDecoration(
                     hintText: 'URL을 입력하세요.',
+                    border: InputBorder.none,
+                    hintStyle: TextStyle(
+                      color: Color.fromARGB(255, 203, 208, 216),
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+              const Divider(
+                thickness: 1,
+                color: Color.fromARGB(255, 203, 208, 216),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: RadioListTile<bool>(
+                      title: const Text('마감일 있음'),
+                      value: true,
+                      groupValue: _isDeadlineEnabled,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          _isDeadlineEnabled = value!;
+                        });
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    child: RadioListTile<bool>(
+                      title: const Text('마감일 없음'),
+                      value: false,
+                      groupValue: _isDeadlineEnabled,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          _isDeadlineEnabled = value!;
+                          if (!_isDeadlineEnabled) {
+                            _deadlineController.text = '없음';
+                          }
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              if (_isDeadlineEnabled)
+                TextField(
+                  controller: _deadlineController,
+                  decoration: const InputDecoration(
+                    hintText: '마감일을 입력하세요. ex) YYYYMMDD 20240717',
                     border: InputBorder.none,
                     hintStyle: TextStyle(
                       color: Color.fromARGB(255, 203, 208, 216),
